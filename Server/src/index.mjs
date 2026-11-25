@@ -1,9 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 
-dotenv.config();  // Charge les variables d'environnement à partir d'un fichier .env
+dotenv.config();// Charge les variables d'environnement à partir d'un fichier .env
 
+mongoose.connect(process.env.MONGO_URI)
+  .then(()=> console.log('MongoDB connected'))
+  .catch((err)=> console.error('MongoDB connection error: ', err.message));
 const app = express();
 
 // Middleware pour autoriser les requêtes cross-origin
