@@ -2,6 +2,11 @@
 
 **Course:** Introduction au DevOps, ISG Sousse, 3 LIG, 2026-2027
 
+**Links**
+- GitHub: https://github.com/toumi-amall/tp4-DevOps-mern
+- Docker Hub (server): https://hub.docker.com/r/amaltoumi/mern-server
+- Docker Hub (client): https://hub.docker.com/r/amaltoumi/mern-client
+
 ## Overview
 MERN application (React client, Express API, MongoDB) containerized with Docker,
 orchestrated with Docker Compose and deployed by a Jenkins pipeline.
@@ -12,7 +17,7 @@ Services:
 - **client**: built from `./Client`, container port 3000, host port 3001
 
 ## Prerequisites
-Docker Desktop (with Docker Compose), Git, Jenkins.
+Docker Desktop (with Docker Compose), Git, Jenkins, a Docker Hub account.
 
 ## 1. Clone the project
 ```bash
@@ -214,12 +219,39 @@ Other parts:
 ![Pipeline stage view](screenshots/jenkins-stage-view.png)
 ![Console output](screenshots/jenkins-console.png)
 
-## 7. Result
+## 7. Docker Hub
+The images are published on Docker Hub:
+- Server: https://hub.docker.com/r/amaltoumi/mern-server
+- Client: https://hub.docker.com/r/amaltoumi/mern-client
+
+```bash
+docker login
+```
+Authenticates to Docker Hub.
+
+```bash
+docker tag mern-server amaltoumi/mern-server:latest
+docker tag mern-client amaltoumi/mern-client:latest
+```
+Gives each local image the name `amaltoumi/image`, which Docker Hub requires.
+
+```bash
+docker push amaltoumi/mern-server:latest
+docker push amaltoumi/mern-client:latest
+```
+Uploads the images to Docker Hub.
+
+Anyone can now run the images with `docker pull amaltoumi/mern-server:latest`.
+
+![Docker images](screenshots/docker-images.png)
+![Docker Hub](screenshots/dockerhub.png)
+
+## 8. Result
 ![Running containers](screenshots/docker-ps.png)
 ![Client](screenshots/client.png)
 ![API health](screenshots/api-health.png)
 
-## 8. Problems encountered and solutions
+## 9. Problems encountered and solutions
 
 **Container name already in use**
 Solution: `docker rm -f <name>`, then run again.
