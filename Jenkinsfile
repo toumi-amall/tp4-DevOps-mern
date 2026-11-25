@@ -6,23 +6,23 @@ pipeline {
       steps { checkout scm }
     }
     stage('Build images') {
-      steps { sh 'docker compose build' }
+      steps { bat 'docker compose build' }
     }
     stage('Deploy') {
       steps {
-        sh 'docker compose down || true'
-        sh 'docker compose up -d'
+        bat 'docker compose down || exit 0'
+        bat 'docker compose up -d'
       }
     }
     stage('Test') {
       steps {
-        sh 'sleep 10'
-        sh 'docker exec server wget -qO- http://localhost:9000/api/health'
+        bat 'ping -n 16 127.0.0.1 > nul'
+        bat 'docker exec server wget -qO- http://localhost:9000/api/health'
       }
     }
   }
 
   post {
-    failure { sh 'docker compose logs || true' }
+    failure { bat 'docker compose logs || exit 0' }
   }
 }
